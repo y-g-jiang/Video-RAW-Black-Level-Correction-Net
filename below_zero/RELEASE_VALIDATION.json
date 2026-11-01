@@ -1,0 +1,37 @@
+{
+  "date": "2026-11-01",
+  "manuscript": "V16.1-derived submission correction",
+  "pages": {
+    "English_main": 9,
+    "English_supplement": 6,
+    "Chinese_main": 8,
+    "Chinese_supplement": 6
+  },
+  "english_abstract_word_count": 192,
+  "citations": 25,
+  "bibliography_entries": 25,
+  "undefined_or_empty_citations": 0,
+  "undefined_cross_references": 0,
+  "doi_metadata_verified": 17,
+  "all_pdf_fonts_embedded": true,
+  "cross_pdf_destinations_verified": true,
+  "visual_layout_review": "all pages reviewed",
+  "table_mean_checks": 42,
+  "frozen_test_cases": 552,
+  "frozen_test_sources": 138,
+  "cached_mean_max_error": 0.0,
+  "release_cpu_inference": "PASS",
+  "nonzero_origin_and_tile_order_smoke": "PASS",
+  "scientific_results": "unchanged",
+  "new_training": false,
+  "full_experiment_rerun": false,
+  "author": "Yaogeng Jiang",
+  "affiliation": null,
+  "corresponding_email": "y.g.jiang@sjtu.edu.cn",
+  "licenses": {
+    "original_code_and_weights": "MIT",
+    "original_paper_assets_and_numeric_results": "CC-BY-4.0",
+    "third_party": "respective original terms"
+  },
+  "release_wrapper_fix": "Corrected the native-mosaic width check for nonzero crop left offsets; zero-origin behavior and frozen metrics are unchanged."
+}
