@@ -1,0 +1,62 @@
+{
+  "architecture_source": "E:\\Workspaces\\ble_training_supervision_20261022\\naf_z63_legacy_posttrain_20261030",
+  "source_files": [
+    {
+      "path": "neural\\source\\bounded_head.py",
+      "sha256": "1fd20f0bde0669824adec341f1993c311f5b22fe6ce9d62aaa38b60150e1eeae"
+    },
+    {
+      "path": "neural\\source\\components.py",
+      "sha256": "e6414be7fb1c2aa0e12a72f7bfca1a26ad3c4ca6326015cbd27e139b0a3d910c"
+    },
+    {
+      "path": "neural\\source\\dense_grid.py",
+      "sha256": "165378ccd18356b7e16ba04be30b714fa3b3e42aa84a6319e1912fb5e67a0e86"
+    },
+    {
+      "path": "neural\\source\\dense_model.py",
+      "sha256": "c37e66707e95c2a24fc075db0548900e381398510ec0e5fa55589f3e10a5ccc2"
+    },
+    {
+      "path": "neural\\source\\estimator_input.py",
+      "sha256": "178a63f6ec03569aaad9bc808d49fdcbab1f13983a15dc831a931bd3e185e8c3"
+    },
+    {
+      "path": "neural\\source\\joint_model.py",
+      "sha256": "74476c90cd87b90e2e8b030a226be34f1064e4209e5f16b0d6d1fdc6805b1a02"
+    },
+    {
+      "path": "neural\\source\\model.py",
+      "sha256": "789c6dbb92e2b0ab237042ed8dd7ded0eca9918c6f5d486664a90f464c3b06d3"
+    },
+    {
+      "path": "neural\\source\\pixel_memory.py",
+      "sha256": "e5b11a92c57e292d8ad52edaf53516a26492d5308b60d63e5e40e7354bcb9bc8"
+    },
+    {
+      "path": "neural\\source\\pixel_model.py",
+      "sha256": "e55a155b76ccc9e5157c1e2220e8ce0ea89af4e46efa2567a804ed6721a7d223"
+    }
+  ],
+  "checkpoint_updates": 105000,
+  "weights": "weights/nafble_105000.pt",
+  "weight_sha256": "cc42ebe94662b5e3f16987bc51f982623dcef5fb7d65b035192dcdc8d2eb964a",
+  "model_state_sha256": "da5ac82d79b3878f032656ae858ce519afa652c756e4aa41ac59cf19be7c1f34",
+  "training_updates_performed_in_revision": 0,
+  "pretrained_37524": {
+    "file": "weights\\nafble_pretrained_37524.pt",
+    "file_sha256": "c63d4553198e1553ec3f6c263b2ef1c73ea3341a2c372c02111e7d8e71e51d91",
+    "parent_full_checkpoint_sha256": "445c31f3fbe2af8acbb5b181176f3f836cc1a8e2ec28aa36282bdd407d179d61",
+    "head": "tanh(score), bound 1 DN",
+    "state_tensors_bitwise_verified_against_parent": true,
+    "runtime_source_hashes_match_ptc_evidence": true
+  },
+  "temporal_46000": {
+    "file": "weights\\nafble_temporal_46000.pt",
+    "file_sha256": "714326d0b41d194de265e927e6e971d11ae752276bbb1bac7c8ab58ee6a72d2c",
+    "parent_full_checkpoint_sha256": "6eaf41ba0f6df556ab23bd54fbbbe72ecd4ce2e51899b0881e2cf602fb4bb4be",
+    "head": "3*tanh(score/3), bound 3 DN",
+    "use": "Supplementary Figure S3",
+    "state_tensors_bitwise_verified_against_parent": true
+  }
+}

@@ -1,0 +1,187 @@
+{
+  "status": "DESIGNED_DEVELOPMENT_DIAGNOSTIC",
+  "source": "0801.png",
+  "source_sha256": "ab5cf6a1cac2d1c2d0792dbd274fd2e53e42118ab6537771a825fd87aa28a60c",
+  "source_kind": "rendered RGB radiance template, not sensor RAW GT",
+  "seed": 2026110300,
+  "crop_yx": [
+    55,
+    600
+  ],
+  "profile": "DSC4194",
+  "profile_sha256": "3c6fe0ee794b06f72601cfad3695c68f2174cb6deeca34f8322445f3b655b9a0",
+  "checkpoint_updates": 105000,
+  "checkpoint_sha256": "cc42ebe94662b5e3f16987bc51f982623dcef5fb7d65b035192dcdc8d2eb964a",
+  "model_state_sha256": "da5ac82d79b3878f032656ae858ce519afa652c756e4aa41ac59cf19be7c1f34",
+  "scored_frames": [
+    6,
+    113
+  ],
+  "scene_median_dn": 2.0,
+  "background_m_dn": [
+    0.6,
+    -0.45,
+    0.35,
+    -0.55
+  ],
+  "jump_events": [
+    {
+      "frame": 24,
+      "increment_dn": [
+        0.25,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 42,
+      "increment_dn": [
+        0,
+        0.3,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 59,
+      "increment_dn": [
+        -0.55,
+        0,
+        0.25,
+        0
+      ]
+    },
+    {
+      "frame": 78,
+      "increment_dn": [
+        0,
+        -0.35,
+        0,
+        0.35
+      ]
+    },
+    {
+      "frame": 96,
+      "increment_dn": [
+        0.3,
+        0,
+        -0.3,
+        -0.45
+      ]
+    },
+    {
+      "frame": 105,
+      "increment_dn": [
+        -0.2,
+        0.2,
+        0,
+        0
+      ]
+    }
+  ],
+  "truth_definition": "zero; m; m+r; m+r+j",
+  "r_source": "JointMotionSampler analog four-CFA successor states from Z63 dark-field TRAIN prefix",
+  "j_source": "Fixed designed intervention, never measured Z63 trajectory",
+  "pairing": "same clean radiance, frame geometry, photon draws, read-noise draws, and integer quantization rule",
+  "scores": [
+    {
+      "T1": {
+        "A_dn": 0.0044066900592480565,
+        "J_dn": 0.0030593944413731065,
+        "R_A_dn": 0.0057245779575573075,
+        "R_J_dn": 0.0026169234373232472
+      },
+      "T7": {
+        "A_dn": 0.003953435211483507,
+        "J_dn": 0.0021645891223857332,
+        "R_A_dn": 0.004718800496818774,
+        "R_J_dn": 0.0019163076752779361
+      },
+      "mean7": {
+        "A_dn": 0.004275030715511305,
+        "J_dn": 0.0005092807981799244,
+        "R_A_dn": 0.00581093147186385,
+        "R_J_dn": 0.000481379383463706
+      }
+    },
+    {
+      "T1": {
+        "A_dn": 0.1510080540518242,
+        "J_dn": 0.058297667896079125,
+        "R_A_dn": 0.1817246061784251,
+        "R_J_dn": 0.056429841529543154
+      },
+      "T7": {
+        "A_dn": 0.15516367759900512,
+        "J_dn": 0.04046995878637394,
+        "R_A_dn": 0.18730990439653408,
+        "R_J_dn": 0.04453801133922328
+      },
+      "mean7": {
+        "A_dn": 0.15043194039266497,
+        "J_dn": 0.008207278351022182,
+        "R_A_dn": 0.18162263437869053,
+        "R_J_dn": 0.008742821670183356
+      }
+    },
+    {
+      "T1": {
+        "A_dn": 0.1535911702812397,
+        "J_dn": 0.06796302091228396,
+        "R_A_dn": 0.18980304885603938,
+        "R_J_dn": 0.07712875523674949
+      },
+      "T7": {
+        "A_dn": 0.1551341056530245,
+        "J_dn": 0.046589462710477286,
+        "R_A_dn": 0.18850289439523835,
+        "R_J_dn": 0.05372664679828178
+      },
+      "mean7": {
+        "A_dn": 0.15864292509807548,
+        "J_dn": 0.06949136361323127,
+        "R_A_dn": 0.19381251311517717,
+        "R_J_dn": 0.16157322787573541
+      }
+    },
+    {
+      "T1": {
+        "A_dn": 0.15677081864971576,
+        "J_dn": 0.0657449978622413,
+        "R_A_dn": 0.1909456166414399,
+        "R_J_dn": 0.07077799444509321
+      },
+      "T7": {
+        "A_dn": 0.15507507600935796,
+        "J_dn": 0.04614928862225592,
+        "R_A_dn": 0.18732514812214388,
+        "R_J_dn": 0.050369073248622886
+      },
+      "mean7": {
+        "A_dn": 0.1638214572849676,
+        "J_dn": 0.08030793317004557,
+        "R_A_dn": 0.19937993280951907,
+        "R_J_dn": 0.18037462328050863
+      }
+    }
+  ],
+  "predictions_npz": "E:\\Workspaces\\ble_training_supervision_20261022\\paper_tci_bilingual_20261101\\evidence\\DESIGNED_OFFSET_REGIMES_20261104.npz",
+  "predictions_sha256": "3281747c7717e564d16c28e55768b07ca996f51e596abe7d1757fabba4f9fd56",
+  "figures": {
+    "en": {
+      "pdf": "E:\\Workspaces\\ble_training_supervision_20261022\\paper_tci_bilingual_20261101\\figures\\designed_offset_regimes_en.pdf",
+      "pdf_sha256": "b520e04f754ec743e5c25aaafe4f62bba956e94651daf19de775f147b198f02f",
+      "png": "E:\\Workspaces\\ble_training_supervision_20261022\\paper_tci_bilingual_20261101\\figures\\designed_offset_regimes_en.png",
+      "png_sha256": "16fd8c6ebec9af35c5943effa0b2f5960ebfac1656fa035a7b621858b16d1901"
+    },
+    "zh": {
+      "pdf": "E:\\Workspaces\\ble_training_supervision_20261022\\paper_tci_bilingual_20261101\\figures\\designed_offset_regimes_zh.pdf",
+      "pdf_sha256": "5840ef4fce42300cbcd41e612010d7e75ce9c27b69a670aa8bd634c7b7db464a",
+      "png": "E:\\Workspaces\\ble_training_supervision_20261022\\paper_tci_bilingual_20261101\\figures\\designed_offset_regimes_zh.png",
+      "png_sha256": "194d3d9bbb8b1fe2c7ae0e435b337e1011377b90581ae257a66ee2bedbf1d883"
+    }
+  },
+  "test_pixels_read": 0,
+  "training_modified": false
+}

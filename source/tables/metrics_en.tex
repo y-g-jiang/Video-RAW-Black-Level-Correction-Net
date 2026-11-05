@@ -1,0 +1,18 @@
+\begin{table}[!t]
+\centering
+\caption{Matched-weight T1 and T7 errors (DN) on the development set. Metrics $A$, $C$, and $J$ evaluate empirical trajectories, while zero-offset columns evaluate independent true-zero inputs. The pre-adaptation output bound is 3 DN.}\label{tab:metrics}
+\footnotesize
+\setlength{\tabcolsep}{2pt}
+\begin{tabular}{lrrrrr}
+\toprule
+Mode & $A$ & $C$ & $J$ & Zero & P95 \\
+\midrule
+Pre T1 & 0.2928 & 0.2575 & 0.1734 & 0.0812 & 0.2011 \\
+Pre T7 & 0.2920 & 0.2566 & 0.1709 & 0.0800 & 0.1858 \\
+46k T1 & 0.0970 & 0.0831 & 0.0814 & 0.0163 & 0.0680 \\
+46k T7 & 0.0954 & 0.0852 & 0.0713 & 0.0161 & 0.0773 \\
+105k T1 & 0.1088 & 0.0943 & 0.0737 & 0.0084 & 0.0295 \\
+105k T7 & 0.1021 & 0.0925 & 0.0548 & 0.0081 & 0.0278 \\
+\bottomrule
+\end{tabular}
+\end{table}

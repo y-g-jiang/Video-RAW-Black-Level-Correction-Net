@@ -1,0 +1,18 @@
+\begin{table*}[!t]
+\centering
+\caption{Five seven-frame filter families before response calibration. Parameters are selected on the other seven scenes, with mean and median using fixed windows.}\label{tab:filters_raw}
+\footnotesize
+\begin{tabular}{lrrrr}
+\toprule
+Method & $A$ (DN) & $J$ (DN) & $g_r$: min--max & $g_c$: min--max \\
+\midrule
+T1 & 0.1328 & 0.0605 & 0.718--0.865 & 0.461--0.741 \\
+T1 + mean & 0.1640 & 0.1154 & 0.082--0.125 & 0.461--0.741 \\
+T1 + median & 0.1677 & 0.1133 & 0.045--0.104 & 0.462--0.742 \\
+T1 + exponential & 0.1344 & 0.0661 & 0.582--0.714 & 0.461--0.741 \\
+T1 + Kalman & 0.1399 & 0.0775 & 0.461--0.576 & 0.461--0.741 \\
+T1 + jump model & 0.1322 & 0.0531 & 0.696--0.852 & 0.461--0.741 \\
+T7 & 0.1270 & 0.0480 & 0.683--0.831 & 0.462--0.743 \\
+\bottomrule
+\end{tabular}
+\end{table*}

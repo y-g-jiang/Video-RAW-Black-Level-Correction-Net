@@ -1,0 +1,135 @@
+{
+  "revision": "fig2-z63-empirical-v12",
+  "source_generator": "E:\\Workspaces\\ble_training_supervision_20261022\\z63_unclipped_demo_20261029\\build_demo.py",
+  "source_generator_sha256": "8ccc5f41db87c64506b15bda8374254cfd25b131e42f56d7a6873c037d952e52",
+  "source_verified": {
+    "passed": true,
+    "frames": 480,
+    "fps": 29.97002997002997,
+    "seconds": 16.016000000000002,
+    "native_shape": [
+      320,
+      480
+    ],
+    "network_shape": [
+      1,
+      7,
+      4,
+      160,
+      240
+    ],
+    "strict_gaussian_mean_standardized": [
+      0.0003084073230261331,
+      -0.00016925226409119487,
+      -0.000435567176548767,
+      0.00013748062763814338
+    ],
+    "strict_gaussian_std_standardized": [
+      1.0002218624645673,
+      0.9999542363954679,
+      1.00008924384306,
+      0.9997011857583973
+    ],
+    "signed_negative_values": 9824224,
+    "codes_below_1008": 5709302,
+    "oracle_algebra_max_error": 7.105427357601002e-15,
+    "replay_integer_exact": true,
+    "target_range": [
+      0.0,
+      0.9928235463827686
+    ],
+    "t7_windows": [
+      45,
+      165,
+      285,
+      405
+    ],
+    "no_clipping": true,
+    "no_floor_mask": true,
+    "no_shot_noise": true,
+    "no_post_noise_warp": true,
+    "fixed_display": true,
+    "naf_inference": false,
+    "source_sha256": "956528ab3e0fadad1ed8ce93f93a30bf9f58c36ffa9dd775e2ad362ffdcf5ace",
+    "source_is_existing_dev_template": true,
+    "source_crop_yx": [
+      198,
+      300
+    ],
+    "source_canvas_shape": [
+      960,
+      1440,
+      3
+    ],
+    "supersampling_per_axis": 2,
+    "field_margin_per_axis": 1.5,
+    "max_motion_native_pixels": 3.2105881172753463,
+    "raw_sample_sha256": "36b366d1ebb4456bdf368119de755620e60296a65190c3d88e619f85e916ab65",
+    "video_sha256": "2be7d4e00f7dd1d6edd78e5229503d062a45440c7b7b5d7bfbddbfa93222c0d1",
+    "scene_canvas_median_dn": 2.0,
+    "scene_exposure_ev_relative_original": -2,
+    "display_linear_white_dn": 48,
+    "noise_and_translation_rotation_seeds_unchanged": true,
+    "zoom_range": [
+      0.9000005376979026,
+      1.0999994623020974
+    ],
+    "zoom_before_noise": true
+  },
+  "existing_dark_frame285_replayed_exact": true,
+  "source_canvas_median_dn": 8.0,
+  "scene_canvas_median_dn": 1.0,
+  "scene_exposure_relative_source_ev": -3,
+  "display_gain_ev": 3,
+  "display_white_source_dn": 48.0,
+  "display_white_after_gain_dn": 6.0,
+  "display_spatial_bin_native_overview": [
+    1,
+    1
+  ],
+  "display_spatial_bin_native_detail": [
+    12,
+    12
+  ],
+  "overview_representation": "Native-resolution linear RGB radiance proxy before CFA sampling.",
+  "display_interpolation": "nearest",
+  "detail_roi_native_yx": [
+    [
+      144,
+      288
+    ],
+    [
+      210,
+      462
+    ]
+  ],
+  "detail_grid_shape_yx": [
+    12,
+    21
+  ],
+  "displayed_cell_area_ratio_to_v9": 0.1111111111111111,
+  "cropped_radiance_and_detail_coordinates_identical": true,
+  "detail_roi_selection": "Fixed shoreline and pier region; identical pixel bounds for the frame-295 overview marker and all three displayed crops.",
+  "single_overview_frame": 295,
+  "selected_frame_indices": [
+    255,
+    295,
+    335
+  ],
+  "selection_policy": "Three fixed frames 255, 295, 335 within the Z63-derived empirical interval 240-359.",
+  "read_noise_sigma_dn": [
+    1.9165091199499027,
+    0.7365587602728576,
+    0.8203695527050426,
+    3.928244742881659
+  ],
+  "poisson_noise": false,
+  "offset_and_read_noise_scale": "Original DN; unchanged when scene exposure is reduced.",
+  "correction": "Subtract the known injected offset from each CFA channel; retain the same read-noise and quantization realization.",
+  "oracle_algebra_max_error": 3.552713678800501e-15,
+  "network_output_included": false,
+  "sealed_test_used": false,
+  "figure_sha256_en": "23551d831c993421462a73396d58cf70f00663d11bc50476d11a9b6c0d85289d",
+  "figure_sha256_zh": "5660891a77e82c5aafb28f17916c352823ece7d1fb32c2b9e345b93365704be9",
+  "figure_arrays_sha256": "3668e9419764565895b024746ac529d7cf2f9cf24ba222b0de2b528a8bd83d6f"
+}

@@ -1,0 +1,6 @@
+{
+  "measured_code": "analysis/benchmark_neural_measured.py",
+  "sha256": "3ed8f3be932260066db3548a7ca339c189bf305edc43564bbefcce9136d4f4f0",
+  "portable_variant": "analysis/benchmark_neural.py",
+  "portable_change": "Only model source and weight paths relocated into this package; original measured samples retained."
+}

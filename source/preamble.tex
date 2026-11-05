@@ -1,0 +1,25 @@
+\documentclass[10pt,journal,twocolumn]{IEEEtran}
+\usepackage{fontspec}
+\setmainfont[Path=fonts/,BoldFont=timesbd.ttf,ItalicFont=timesi.ttf,BoldItalicFont=timesbi.ttf]{times.ttf}
+\usepackage{amsmath,amssymb,booktabs,array,graphicx}
+\usepackage[letterpaper,margin=1in,columnsep=.25in]{geometry}
+\usepackage{balance}
+\raggedbottom
+\usepackage[hidelinks,unicode]{hyperref}
+\newcommand{\DN}{\,\mathrm{DN}}
+\newcommand{\mean}{\operatorname{mean}}
+\newcommand{\BCE}{\operatorname{BCEWithLogits}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\figwide}[4]{\begin{figure*}[!t]\centering\includegraphics[width=#2\textwidth]{figures/#1.pdf}\caption{#3}\label{#4}\end{figure*}}
+\newcommand{\figone}[3]{\begin{figure}[!t]\centering\includegraphics[width=\columnwidth]{figures/#1.pdf}\caption{#2}\label{#3}\end{figure}}
+\setcounter{dbltopnumber}{2}
+\renewcommand{\dbltopfraction}{0.92}
+\renewcommand{\dblfloatpagefraction}{0.85}
+\makeatletter
+\setlength{\@dblfptop}{0pt}
+\setlength{\@dblfpbot}{0pt}
+\newenvironment{inlinetable}{\par\medskip\noindent\begin{minipage}{\columnwidth}\def\@captype{table}}{\end{minipage}\par\medskip}
+\makeatother
+\setlength{\emergencystretch}{1em}
+\hyphenation{black-level photo-electron photo-electrons}
+

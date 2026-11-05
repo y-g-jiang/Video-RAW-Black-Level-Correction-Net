@@ -1,0 +1,148 @@
+{
+  "schema": "PAPER_NARRATIVE_AUDIT_V1",
+  "main": "E:\\Workspaces\\ble_training_supervision_20261022\\paper_tci_corrected_20261104\\source\\main.tex",
+  "supplement": "E:\\Workspaces\\ble_training_supervision_20261022\\paper_tci_corrected_20261104\\source\\appendix_en.tex",
+  "heuristic_only": true,
+  "sections": [
+    {
+      "level": "section",
+      "heading": "Introduction",
+      "approx_prose_words": 233
+    },
+    {
+      "level": "section",
+      "heading": "Observation Model and Estimation Targets",
+      "approx_prose_words": 0
+    },
+    {
+      "level": "subsection",
+      "heading": "A Four-Channel Correction in Native Units",
+      "approx_prose_words": 93
+    },
+    {
+      "level": "subsection",
+      "heading": "Accuracy, Stability, and Response",
+      "approx_prose_words": 190
+    },
+    {
+      "level": "section",
+      "heading": "Estimation from Spatial and Native Evidence",
+      "approx_prose_words": 0
+    },
+    {
+      "level": "subsection",
+      "heading": "Spatial Context and Native-Pixel Memory",
+      "approx_prose_words": 99
+    },
+    {
+      "level": "subsection",
+      "heading": "Query Rereading and Temporal Exchange",
+      "approx_prose_words": 149
+    },
+    {
+      "level": "subsection",
+      "heading": "Bounded Offsets and Residual Supervision",
+      "approx_prose_words": 114
+    },
+    {
+      "level": "section",
+      "heading": "Temporal Adaptation and Experimental Design",
+      "approx_prose_words": 0
+    },
+    {
+      "level": "subsection",
+      "heading": "Synthesis in the Target Numerical Domain",
+      "approx_prose_words": 155
+    },
+    {
+      "level": "subsection",
+      "heading": "Training and Model Selection",
+      "approx_prose_words": 119
+    },
+    {
+      "level": "subsection",
+      "heading": "Evaluation Protocol",
+      "approx_prose_words": 177
+    },
+    {
+      "level": "section",
+      "heading": "Results",
+      "approx_prose_words": 0
+    },
+    {
+      "level": "subsection",
+      "heading": "Physical Low-Light Camera Validation",
+      "approx_prose_words": 110
+    },
+    {
+      "level": "subsection",
+      "heading": "Synthetic PTC Matrix Benchmark",
+      "approx_prose_words": 54
+    },
+    {
+      "level": "subsection",
+      "heading": "Temporal Accuracy and Response",
+      "approx_prose_words": 121
+    },
+    {
+      "level": "subsection",
+      "heading": "Z63-Derived Continuous Sequences",
+      "approx_prose_words": 145
+    },
+    {
+      "level": "section",
+      "heading": "Conclusion",
+      "approx_prose_words": 84
+    }
+  ],
+  "total_approx_prose_words": 1843,
+  "flags_by_type": {
+    "scope_caveat": 1
+  },
+  "flags_total": 1,
+  "flag_examples": [
+    {
+      "type": "scope_caveat",
+      "line": 138,
+      "matched": "under the fixed",
+      "snippet": "Figure~\\ref{fig:color} shows reduced shadow color casts after four-channel correction. Relative to the aligned 0-EV scene references, CAM16-UCS shadow chromaticity distance decreases from 4."
+    }
+  ],
+  "labels_count": 22,
+  "references_count": 8,
+  "potentially_unresolved_refs": [
+    "fig:color",
+    "fig:ptc",
+    "fig:z63_empirical",
+    "tab:color",
+    "tab:filters",
+    "tab:metrics"
+  ],
+  "notes": [
+    "Heuristic word counts exclude recognizable math and floats, not complete TeX semantics.",
+    "Every rhetorical flag requires human review; some caveats and negations are scientifically essential.",
+    "Cross-document externaldocument/aux labels or dynamic macros may create false unresolved references.",
+    "Scientific truth, peer-reviewed relevance, page layout and submission compliance are not verified."
+  ],
+  "compiled_cross_references": "all resolved; heuristic list does not expand figure macros or input tables",
+  "pdf_pages": {
+    "en_main": {
+      "pages": 8,
+      "unresolved": 0
+    },
+    "en_supplement": {
+      "pages": 6,
+      "unresolved": 0
+    },
+    "zh_chinese": {
+      "pages": 7,
+      "unresolved": 0
+    },
+    "zh_supplement": {
+      "pages": 5,
+      "unresolved": 0
+    }
+  },
+  "tex_overfull_boxes": 0,
+  "missing_glyphs": 0
+}

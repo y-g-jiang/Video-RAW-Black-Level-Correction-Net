@@ -1,0 +1,41 @@
+{
+  "python_syntax": "pass",
+  "calibrated_arrays_and_responses": "pass",
+  "uncalibrated_arrays_and_responses": "pass",
+  "eight_scene_baseline_bitwise_replay": true,
+  "three_model_files_and_export_identities": "pass",
+  "ptc_nonzero_mae_dn": 0.05476824406295343,
+  "unchanged_frozen_tables": [
+    "source/tables/buckets_en.tex",
+    "source/tables/buckets_zh.tex",
+    "source/tables/color_en.tex",
+    "source/tables/color_zh.tex",
+    "source/tables/gains_en.tex",
+    "source/tables/gains_zh.tex",
+    "source/tables/metrics_en.tex",
+    "source/tables/metrics_zh.tex",
+    "source/tables/patterns_en.tex",
+    "source/tables/patterns_zh.tex",
+    "source/tables/ptc_en.tex",
+    "source/tables/ptc_zh.tex",
+    "source/tables/sources_en.tex",
+    "source/tables/sources_zh.tex"
+  ],
+  "main_equations_unchanged": true,
+  "nine_bilingual_table_bodies": "pass",
+  "claim_regression": "pass",
+  "pdf_page_counts": {
+    "paper\\en\\main.pdf": 8,
+    "paper\\en\\supplement.pdf": 6,
+    "paper\\zh\\chinese.pdf": 7,
+    "paper\\zh\\supplement.pdf": 5
+  },
+  "tex_overflow_missing_glyphs_unresolved_citations": "pass",
+  "training_updates": 0,
+  "sealed_test_pixels_read": 0,
+  "remaining_research": [
+    "independent-source confirmation",
+    "same-protocol original BLBE comparison",
+    "retrained native-reread ablation"
+  ]
+}

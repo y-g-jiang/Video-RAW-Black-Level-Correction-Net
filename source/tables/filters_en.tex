@@ -1,0 +1,19 @@
+\begin{table}[!t]
+\centering
+\caption{Leave-one-scene-out development results for seven-frame response-calibrated controls. Metrics $A$ and $J$ are in DN, sliding-center probe gains average the scenes and four CFAs, and time denotes streaming milliseconds per center.}\label{tab:filters}
+\footnotesize
+\setlength{\tabcolsep}{2.6pt}
+\begin{tabular}{lrrrrr}
+\toprule
+Method & $A$ & $J$ & $\bar g_r$ & $\bar g_c$ & ms \\
+\midrule
+T1 & 0.1328 & 0.0605 & 0.781 & 0.549 & 11.76 \\
+T1 + mean & 0.1331 & 0.0586 & 0.745 & 0.553 & 11.76 \\
+T1 + median & 0.1336 & 0.0587 & 0.745 & 0.553 & 11.76 \\
+T1 + exponential & 0.1331 & 0.0584 & 0.745 & 0.553 & 11.76 \\
+T1 + Kalman & 0.1331 & 0.0584 & 0.745 & 0.553 & 11.76 \\
+T1 + jump model & 0.1328 & 0.0543 & 0.753 & 0.552 & 11.77 \\
+T7 & 0.1270 & 0.0480 & 0.754 & 0.552 & 41.46 \\
+\bottomrule
+\end{tabular}
+\end{table}

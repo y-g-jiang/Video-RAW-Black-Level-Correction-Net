@@ -1,0 +1,166 @@
+\input{preamble}
+\hypersetup{pdftitle={Black-Level Estimation from Native Pixel Evidence for Temporally Stable RAW Correction},pdfauthor={Yaogeng Jiang},pdfsubject={Black-level estimation and temporal RAW correction}}
+\begin{document}
+\title{{\small\ttfamily repo/update: \href{https://github.com/y-g-jiang/Video-RAW-Black-Level-Correction-Net}{https://github.com/y-g-jiang/}\\\href{https://github.com/y-g-jiang/Video-RAW-Black-Level-Correction-Net}{Video-RAW-Black-Level-Correction-Net}}\\[0.8em]Black-Level Estimation from Native Pixel Evidence for Temporally Stable RAW Correction}
+\author{\href{https://y-g-jiang.github.io}{Yaogeng Jiang}\\\url{https://y-g-jiang.github.io}}
+\maketitle
+\begin{abstract}
+Sub-DN black-level errors produce shadow chromaticity shifts after exposure amplification and temporal fluctuations in RAW video. We estimate four CFA offsets in native sensor units using multiscale spatial features and direct attention over signed Bayer observations. Queries exchange information across frames and reread each frame, supporting independent single-frame (T1) and joint seven-frame (T7) inference with shared weights. On a single-scene benchmark with 14 photon-transfer-curve profiles and 13 offset patterns, the pretrained estimator reduces nonzero-offset MAE from 0.649947 to 0.054768 DN. Three-camera +6 EV exposure-ladder examples show shadow chromaticity-distance reductions of 16.54\%--36.09\% relative to aligned 0-EV scene references. At the 105k development operating point, T7 reduces adjacent-change error from 0.073666 to 0.054778 DN and absolute error from 0.108795 to 0.102115 DN across eight scenes. On Z63-derived continuous sequences, five seven-frame T1 postfilters use source-held-out parameter selection and response calibration. Paired long-sequence probes measure all responses at the same sliding-window centers used for scoring. Aggregate per-CFA gains differ from T7 by at most 0.0353. T7 attains absolute/adjacent-change errors of 0.1270/0.0480 DN, compared with 0.1328--0.1336/0.0543--0.0587 DN for the filters. These results quantify the accuracy, temporal response, and computational cost of the shared-weight estimator.
+\end{abstract}
+\begin{IEEEkeywords}
+Black-level estimation, computational imaging, RAW processing, low-light imaging, temporal stability, native pixel evidence.
+\end{IEEEkeywords}
+
+\section{Introduction}
+\IEEEPARstart{B}{lack-level} calibration affects photometric accuracy and shadow color in digital imaging. Digital exposure amplification can turn fractional digital-number (DN) errors into visible chromaticity shifts~\cite{ptc_quant}. In video, independent frame-wise estimates can also introduce temporal variation in the applied correction. We address both effects by estimating four color-filter-array (CFA) residual offsets in native sensor units and subtracting them before demosaicing and non-linear ISP rendering.
+
+BLBE estimates four CFA offsets before deep raw denoising to reduce low-light color bias~\cite{blbe}. Raw restoration and physics-based noise models address single-image recovery~\cite{sid,sidd,eld,noiseflow,unprocessing}, while burst and video methods use temporal observations to reconstruct image content~\cite{smd,fastdvd,crvd}. Here, multi-frame observations support four scalar corrections per frame. A SimpleGate spatial encoder~\cite{naf} supplies multiscale scene context, and compact queries inspired by set-based aggregation~\cite{set,perceiver} directly read signed Bayer cells at native resolution.
+
+For video, queries exchange information across frames and reread each frame's native observations. Independent single-frame (T1) and joint seven-frame (T7) inference share the same weights and spatial encoder. We evaluate offset accuracy on a PTC simulation matrix, shadow color on three-camera exposure-ladder examples, and temporal accuracy and response on Z63-derived development sequences. Classical seven-frame postfilters provide a direct comparison with temporal processing of fixed T1 predictions.
+
+\figwide{architecture}{.98}{Spatial features and native Bayer-cell observations feed eight queries per frame. T7 exchanges queries across seven frames and rereads each frame, while T1 treats frames independently. Both modes share weights and subtract four predicted CFA offsets from signed RAW.}{fig:architecture}
+
+\section{Observation Model and Estimation Targets}
+\subsection{A Four-Channel Correction in Native Units}
+Let $y_{t,c}(p)$ denote the signed RAW observation at frame $t$, CFA channel $c\in\{R,G_1,G_2,B\}$, and within-channel position $p$ after subtracting a static reference black level. We express the sensor observation as
+\begin{equation}
+ y_{t,c}(p)=x_{t,c}(p)+\delta_{t,c}+\epsilon_{t,c}(p),
+ \label{eq:observation}
+\end{equation}
+where $x$ is the scene signal in DN, $\delta$ denotes the residual channel offset, and $\epsilon$ represents composite sensor noise and quantization error.
+
+Given an estimated offset vector $\hat\delta$, the corrected RAW frame is obtained by channelwise constant subtraction,
+\begin{equation}
+ z_{t,c}(p)=y_{t,c}(p)-\hat\delta_{t,c}.
+ \label{eq:correction}
+\end{equation}
+Consequently, any two positions $p$ and $q$ in the same frame and CFA channel satisfy
+\begin{equation}
+ z_{t,c}(p)-z_{t,c}(q)=y_{t,c}(p)-y_{t,c}(q).
+ \label{eq:invariance}
+\end{equation}
+Before downstream non-linear clipping or requantization, this additive subtraction strictly preserves within-channel spatial contrast while recalibrating cross-channel chromatic balance.
+
+\subsection{Accuracy, Stability, and Response}
+Both dim scene illumination and an additive offset shift the observed pixel level near zero. Separating them relies on spatial structure, low-signal samples, signal-dependent noise, and temporal context across frames. Because the strength of these cues varies across scenes, we evaluate estimators using nonzero offset trajectories, true-zero checks, and controlled perturbations.
+
+Let $e_{t,c}=\hat\delta_{t,c}-\delta_{t,c}$ denote the estimation residual. Across sequences indexed by $n$, we define absolute error $A$, temporal mean error $C$, adjacent-change error $J$, and output variation $S$ as
+\begin{align}
+ A&=\mean_{n,t,c}|e_{n,t,c}|,\label{eq:A}\\
+ C&=\mean_{n,c}\left|\mean_t e_{n,t,c}\right|,\label{eq:C}\\
+ J&=\mean_{n,t,c}|e_{n,t+1,c}-e_{n,t,c}|,\label{eq:J}\\
+ S&=\mean_{n,t,c}|\hat\delta_{n,t+1,c}-\hat\delta_{n,t,c}|.\label{eq:S}
+\end{align}
+Here, $A$ reflects overall absolute accuracy, $C$ captures persistent temporal bias, $J$ quantifies error in adjacent-frame offset changes, and $S$ measures raw output variation. In addition, paired perturbation gains evaluate the estimator's responsiveness to dynamic offset shifts, while zero-offset MAE and its 95th percentile quantify unintended false correction in the absence of residual bias.
+
+\figwide{video_demo_z63_empirical_en_v12}{.98}{Illustration of a simulated RAW video driven by a Z63 dark-field-derived four-CFA trajectory. Three fixed frames (255, 295, 335) within its empirical interval show the radiance proxy, signed noisy RAW, and correction using the known injected offsets at identical sensor coordinates. Scene median is 1 DN, and display gain is +3 EV. The lower plot spans all 120 frames of this interval (29.97 frames/s). Network estimates on eight development sequences are compared in Fig.~\ref{fig:z63_empirical}.}{fig:video_demo}
+
+\section{Estimation from Spatial and Native Evidence}
+\label{sec:method}
+
+\subsection{Spatial Context and Native-Pixel Memory}
+The four-stage SimpleGate encoder~\cite{naf} produces an eightfold-downsampled feature grid. A second path retains every $2\times2$ Bayer cell as four signed samples with position and metadata. The resulting 22-dimensional descriptor is mapped to a 16-dimensional key and a 28-dimensional value. For query $q$ and cell descriptors $d_i$, the native read is
+\begin{equation}
+\begin{aligned}
+ R_n(q,N)&=W_o\!\left(\sum_{i=1}^{M}\alpha_i(q)v(d_i)\right),\\
+ \alpha_i(q)&=\frac{\exp a_i(q)}{\sum_j\exp a_j(q)}.
+\end{aligned}\label{eq:read}
+\end{equation}
+Here $a_i$ denotes the query--key attention logit. The softmax normalizes across all $M$ Bayer cells using numerically stable blockwise log-sum-exp accumulation. The spatial-grid reading $R_g$ concurrently supplies high-level semantic context. Both pathways infer offsets from a representative spatial window, after which the predicted four-channel constants are applied across the entire full-resolution signed RAW frame.
+
+\subsection{Query Rereading and Temporal Exchange}
+Eight learned 192-dimensional queries initialize the per-frame representation by reading the grid and native memory
+\begin{equation}
+ Q_t^0=R_g(Q_*,G_t)+0.1R_n(Q_*,N_t).
+ \label{eq:initialread}
+\end{equation}
+Temporal exchange blocks $E_r$ then update the query representations using four-head attention with positional and segment encodings. After each of the first three of four exchange blocks, the updated queries return to reread their own-frame memories according to
+\begin{align}
+ V_t^r&=E_r(Q^{r-1})_t,\nonumber\\
+ Q_t^r&=V_t^r+0.25\big[R_g(V_t^r,G_t)
+                 +0.1R_n(V_t^r,N_t)\big].
+ \label{eq:reread}
+\end{align}
+Following the fourth exchange block, the final readout combines the updated queries with the spatial-grid mean and standard deviation. Neighboring frames therefore guide query refinement while each memory read remains anchored to its own-frame spatial coordinates.
+
+In single-frame mode (T1), each frame is assigned an isolated attention segment, whereas seven-frame mode (T7) groups seven contiguous frames into a shared temporal segment. Both configurations traverse identical exchange blocks. Consequently, evaluating T1 over a multi-frame batch strictly replicates seven independent single-frame executions, ensuring that perturbations in neighboring frames do not influence T1 predictions. An intermediate auxiliary head further provides deep supervision during training.
+
+\subsection{Bounded Offsets and Residual Supervision}
+For network output $s$ and bound $B>0$, the output head and training loss are defined as
+\begin{align}
+ \hat\delta&=B\tanh(s/B),\label{eq:head}\\
+ \ell_B(s,\delta)&=B^2\BCE\!\left(\frac{2s}{B},\frac{\delta/B+1}{2}\right).
+ \label{eq:loss}
+\end{align}
+Differentiating $\ell_B(s,\delta)$ with respect to $s$ gives
+\begin{equation}
+ \frac{\partial\ell_B}{\partial s}=\hat\delta-\delta.
+ \label{eq:gradient}
+\end{equation}
+The loss yields a bounded estimate in $[-B,B]\DN$ and an output-score gradient equal to the estimation residual.
+
+The initial single-frame model employs an output bound of $B=1\DN$, which is expanded to $B=3\DN$ during video adaptation to accommodate cumulative constant offsets and empirical temporal drift. Baseline metrics in Table~\ref{tab:metrics} are evaluated under the expanded $B=3\DN$ bound.
+
+\figwide{real_color}{.98}{Exposure-ladder examples for the S5 II, OM-1, and S9. Columns show the same-scene 0-EV reference, the six-stop underexposed input after +6 EV recovery with metadata black levels, and pretrained T1 correction under the same renderer.}{fig:color}
+
+\section{Temporal Adaptation and Experimental Design}
+\label{sec:adapt}
+
+\subsection{Synthesis in the Target Numerical Domain}
+Adaptation uses 48 training scenes and eight disjoint development scenes. Linearized RGB radiance proxies undergo camera translation, rotation, scaling, twofold spatial integration in each axis, and CFA sampling to produce $320\times480$ Bayer-pixel crops. The simulated motion emphasizes near-static scenes and modest camera movement.
+
+Sensor noise and target offsets are introduced following CFA sampling. Modeling the Nikon Z6 III operating point with static black and white levels of 1008 and 16383 DN and a full-well capacity of 90,000 electrons yields a conversion gain of $k=0.170833\DN$/electron. Gaussian read noise standard deviation is sampled per sequence from $U[1.2,1.8]\DN$. The channel offset target is constructed as $\delta_{t,c}=m_c+r_{t,c}$, where $m_c$ denotes a sequence-constant background offset with magnitude drawn from $U[0,1]\DN$, and $r_{t,c}$ represents dynamic joint four-channel transitions extracted from physical dark-field recordings. Source median intensities range from 0.25 to 64 DN. Poisson shot noise and Gaussian read noise are added before integer quantization, preserving negative code values. Detailed sampling distributions and trajectory synthesis procedures are provided in the supplementary material.
+
+\subsection{Training and Model Selection}
+Video adaptation initializes from the pretrained T1 model, expands the output bound from $B=1$ to $3\DN$, and retains the backbone and Adam state. The three supervision paths use the same seven-frame, four-CFA targets
+\begin{equation}
+ \mathcal L=0.25\mathcal L_{\mathrm{frame}}
+          +0.375\mathcal L_{\mathrm{T1}}
+          +0.375\mathcal L_{\mathrm{T7}}.
+ \label{eq:training}
+\end{equation}
+The network has 2.32 million trainable parameters. The 105,000-update checkpoint was designated as the temporal operating point after development evaluation. Table~\ref{tab:metrics} also reports the early 46k model selected by the baseline error constraints, while Supplementary Fig.~S2 compares the 102k, 105k, and 106k operating points.
+
+\figwide{ptc_matrix}{.98}{Four-channel MAE of the pretrained T1 estimator on one fixed scene across 14 PTC noise records and 13 signed offset patterns. The color scale is fixed at 0--1 DN.}{fig:ptc}
+\figwide{temporal}{.98}{Eight-scene development results at 105k: (a) scene-level adjacent-change error $J$, (b) output variation $S$, and (c) centered relative-response gain at a 2-DN scene median.}{fig:temporal}
+
+\subsection{Evaluation Protocol}
+The PTC matrix combines one OM-1 scene, 14 noise records, and 13 offset patterns: 168 nonzero and 14 true-zero conditions. The short-window temporal suite contains 16 seven-frame segments from eight scenes and two recording profiles per scene. The continuous study uses one Z63-derived 120-frame sequence per scene and scores centers 6--113. All methods receive identical Bayer observations and share three-frame look-ahead. Five T1 postfilters---mean, median, symmetric exponential, random-walk Kalman, and a jump-mixture state-space smoother---use seven-frame support. Filter parameters and per-CFA response calibration are fitted on seven scenes and applied to the remaining scene. This leave-one-scene-out evaluation is conducted across the eight development scenes with the model fixed at the 105k checkpoint. Physical evaluation uses the S5 II, OM-1, and S9 exposure ladders. Paired 120-frame perturbation probes measure filter and network response at these same sliding-window centers.
+
+\figwide{z63_empirical_t1_t7_en}{.98}{Z63-derived continuous development sequences at 105k. Left: four-CFA targets and R-channel tracking for the fixed first scene. Offset axes span $-2$ to $2$ DN. Right: eight-scene adjacent-change errors for T1, T7, and five response-calibrated postfilters. Parameters for each scene use the other seven scenes. All methods share the same observations and 108 valid centers.}{fig:z63_empirical}
+
+\section{Results}
+\label{sec:results}
+
+\subsection{Physical Low-Light Camera Validation}
+We evaluate the pretrained single-frame estimator on six-stop underexposed RAW captures from the S5 II and S9 at ISO 100 and the OM-1 at ISO 200. Each camera contributes one studio scene with a corresponding normally exposed 0-EV image. The underexposed image is recovered with +6 EV linear gain. The 0-EV scene image supplies the reference for registration, brightness matching, and shadow chromaticity distance.
+
+Figure~\ref{fig:color} shows reduced shadow color casts after four-channel correction. Relative to the aligned 0-EV scene references, CAM16-UCS shadow chromaticity distance decreases from 4.811925 to 4.015822 for the S5 II, from 14.256274 to 10.228349 for the OM-1, and from 12.079137 to 7.720369 for the S9 (Table~\ref{tab:color}). These correspond to reductions of 16.54\%, 28.25\%, and 36.09\% under the fixed rendering and matching procedure.
+\input{tables/color_en}
+
+
+\subsection{Synthetic PTC Matrix Benchmark}
+Across the comprehensive PTC simulation matrix (Fig.~\ref{fig:ptc}), the pretrained T1 estimator achieves consistent improvements across all 168 nonzero-offset conditions, lowering the overall mean absolute error from 0.649947 DN to 0.054768 DN. On the 14 zero-offset test conditions, the mean false-correction error is 0.006281 DN, and the maximum cell-mean error across the entire parameter grid is 0.162939 DN.
+
+
+\subsection{Temporal Accuracy and Response}
+\input{tables/metrics_en}
+
+At the 105,000-iteration checkpoint, transitioning from single-frame T1 to joint seven-frame T7 inference decreases adjacent-change error $J$ from 0.073666 to 0.054778 DN (a 25.64\% reduction) and absolute error $A$ from 0.108795 to 0.102115 DN (a 6.14\% reduction). Paired scene-bootstrap 95\% intervals for the difference (T7 minus T1) span $[-0.025676,-0.011593]\DN$ for $J$ and $[-0.010518,-0.003028]\DN$ for $A$. All eight individual scenes exhibit improvements in $J$, and seven demonstrate gains in $A$. For comparison, the early 46,000-update model yields $A=0.095354\DN$ and $J=0.071338\DN$, as reported in Table~\ref{tab:metrics}.
+
+At a 2-DN scene median, 105k T7 relative-response gains range from 0.505 to 0.608 across CFA channels compared with 0.785 to 0.850 for T1, while common-offset gains span 0.745--0.763 versus 0.797--0.831. At a brighter 64-DN median, T7 common-offset gains moderate to 0.076--0.162. In the low-amplitude regime with offset magnitudes within $(0,0.1]\DN$ across 13 dependent frame--CFA observations, T7 attains an MAE of 0.109206 DN, with 7 of 13 estimates incurring higher error than zero correction.
+
+
+
+\subsection{Z63-Derived Continuous Sequences}
+On the eight Z63-derived continuous sequences, T1 and T7 attain $A=0.132780/0.126973\DN$ and $J=0.060524/0.048024\DN$, respectively. The fixed seven-frame mean gives $A/J=0.163986/0.115446\DN$. Table~\ref{tab:filters} compares all five filter families after calibration using paired sliding-center responses. Their aggregate common and relative gains differ from T7 by at most 0.0353 per CFA. Their $A$ spans 0.132834--0.133597 DN and $J$ spans 0.054323--0.058703 DN. The calibrated jump smoother gives $A/J=0.132834/0.054323\DN$, while T7 lowers $A$ in seven scenes and $J$ in six. Paired scene-bootstrap 95\% ranges for T7 minus this control are $[-0.008743,-0.003141]\DN$ for $A$ and $[-0.010941,-0.002215]\DN$ for $J$. Against the other four calibrated families, T7 lowers $J$ in all eight scenes.
+\input{tables/filters_en}
+
+In addition, a paired condition analysis distinguishes zero offset, static background $m$, empirical drift $m+r$, and drift accompanied by six designed channel-wise step interventions $m+r+j$, as detailed in Supplementary Fig.~S1. Within the identical seven-frame temporal span, the moving average of T1 attains lower $J$ under purely static offsets ($0.008207\DN$ versus $0.040470\DN$ for T7), whereas joint T7 inference gives lower errors in the designed dynamic condition ($m+r+j$), achieving $A/J$ of $0.155075/0.046149\DN$ compared with $0.163821/0.080308\DN$ for the moving average.
+
+\section{Conclusion}
+We estimate four native-unit CFA offsets by combining spatial context with direct retrieval of signed Bayer observations. Shared queries support single-frame and seven-frame inference. Single-scene PTC tests quantify offset accuracy, and three-camera exposure-ladder examples show reduced shadow chromaticity error. On Z63-derived development sequences, T7 achieves lower mean absolute and adjacent-change errors than the five selected, response-calibrated T1 postfilters. Paired sliding-center probes quantify common and empirical-trajectory response alongside these errors. The temporal analysis characterizes the accuracy--response trade-off and the additional computation of joint inference.
+
+% alance
+\input{references}
+\end{document}

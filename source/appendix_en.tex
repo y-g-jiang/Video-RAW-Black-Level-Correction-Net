@@ -1,0 +1,95 @@
+\section{Correction Properties and Loss Derivative}
+\label{app:math}
+For one frame and CFA channel, subtracting the spatial sample mean from $z=y-\hat\delta$ yields $z-\bar z=y-\bar y$, confirming that the channel's spatial sample variance is preserved before downstream processing. Since $\hat\delta$ is estimated from noisy data, across repeated captures
+\begin{align}
+ \operatorname{Cov}(z_p,z_q)
+ &=\operatorname{Cov}(y_p,y_q)+\operatorname{Var}(\hat\delta)\nonumber\\
+ &\quad-\operatorname{Cov}(y_p,\hat\delta)
+       -\operatorname{Cov}(y_q,\hat\delta).
+\end{align}
+This covariance accounts for the variance of the estimate and its correlation with each input sample. Equation~\eqref{eq:invariance} characterizes within-frame spatial differences at the signed-RAW stage before subsequent clipping, requantization, white balance, and demosaicing act on the corrected signal.
+
+To derive~\eqref{eq:gradient}, let $u=2s/B$ and $q=(\delta/B+1)/2$, with $|\delta|\le B$. Then
+\begin{align}
+ \frac{\partial[B^2\BCE(u,q)]}{\partial s}
+ &=2B\left[\sigma(2s/B)-q\right]\nonumber\\
+ &=B\tanh(s/B)-\delta.
+\end{align}
+The full parameter gradient combines this residual with the network Jacobian, label averaging, and the three loss weights in~\eqref{eq:training}, while the output derivative is $\operatorname{sech}^2(s/B)$. Expanding the bound from $B=1$ to $B=3$ alters the non-linear saturation profile in~\eqref{eq:head}, producing a maximum forward output difference of 0.0530587 DN across the initial evaluation batch at identical logits. The baseline results in Table~\ref{tab:metrics} are computed under the expanded $B=3\DN$ bound.
+
+\section{Training, Perturbation Tests, and Model Selection}
+\label{app:protocol}
+The sampling region has three times the target Bayer height and width, combining a $1.5\times$ field of view with twofold spatial integration along each axis, and eligible sources meet these dimensions at native resolution. A single brightness multiplier computed from the joint median of the source RGB values preserves the scene-dependent ratios among frame and CFA means.
+
+For each sequence, the common-offset sign is sampled independently and equally for each CFA and held fixed across seven frames. Combining this component with the joint empirical trajectory retains both the common shift and the temporal trajectory, with zero-offset and constant-offset sequences as references. Adaptation preserves the Adam state for 195 parameter tensors, the random-number-generator state, and the frozen parameters. The pretrained single-frame model weighted its intermediate and final heads by $0.25$ and $0.75$, averaged over three sampled views.
+
+Figure~\ref{fig:designed_regimes} separates four offset conditions on one paired 120-frame development sequence, comprising $\delta_{t,c}=0$, $m_c$, $m_c+r_{t,c}$, and $m_c+r_{t,c}+j_{t,c}$. The specified background is $m=(0.60,-0.45,0.35,-0.55)\DN$ in R, G1, G2, B order. The joint trajectory $r$ follows the Z63 dark-field-derived transition model, while $j$ introduces six specified channel-wise changes at frames 24, 42, 59, 78, 96, and 105. Scene geometry and photon and read noise draws are paired across conditions.
+
+\figwide{designed_offset_regimes_en}{.98}{Designed offset conditions on one synthetic Bayer development sequence at 105k. Left: four-CFA injected targets. Right: R-channel target along with matched-weight T1, T7, and centered seven-frame mean of T1. Panel labels report four-CFA $A/J$ in DN over the 108 valid center frames, where dotted lines mark the designed changes.}{fig:designed_regimes}
+
+For each source image and each of the two recorded offset trajectories, the evaluation protocol tests seven conditions at 2 DN (empirical, native-motion, zero, common, common-plus, relative, and relative-plus, where native-motion removes the common component while retaining empirical drift) together with three conditions (zero, common, and common-plus) at each of 0.25, 16, and 64 DN, yielding 16 conditions per source--trajectory pair and 256 groups overall.
+
+Common-offset tests share scene, geometry, and noise seeds while comparing signed common offsets of magnitude 0.3 and 0.5 DN. Relative-offset tests add the signed trajectory $[0,.2,-.2,.2,-.2,.2,0]\DN$ to a signed 0.4-DN common base. Let $\Delta p$ and $\Delta y$ denote the paired prediction and target differences. For each CFA, common gain is $\mean_t\Delta p/\mean_t\Delta y$, while with temporal centering denoted by a tilde, relative gain is
+\begin{equation}
+ g_c=\frac{\sum_t\widetilde{\Delta p}_{t,c}\widetilde{\Delta y}_{t,c}}
+ {\sum_t\widetilde{\Delta y}_{t,c}^{\,2}}.
+\end{equation}
+Reported gains average these sequence-level ratios across source--trajectory pairs. Because continuous perturbations precede quantization, each injected offset maps to integer pixel differences determined by each pixel's prequantization value.
+
+The baseline selection criterion limits $C$, $J$, and zero MAE to within 0.005 DN of the initial baseline and zero P95 to within 0.01 DN, then ranks checkpoints by $(A_{T1}+A_{T7})/2$, which selects the early 46k model. Following development evaluation, the 105k checkpoint was designated as the operating point for temporal analysis, balancing absolute offset accuracy against dynamic tracking response. Specifically, T7 $A/J$ values are 0.098377/0.055296 DN at 102k, 0.102115/0.054778 DN at 105k, and 0.096073/0.052858 DN at 106k. While 106k achieves slightly lower error values, its minimum common and relative gains at 2 DN decrease to 0.655 and 0.496, respectively, whereas the 105k checkpoint attains 0.745 and 0.505. Figure~\ref{fig:operating} illustrates this empirical accuracy--stability trajectory across training.
+
+\section{PTC Records and Offset Patterns}
+\label{app:ptc}
+\input{tables/ptc_en}
+\input{tables/patterns_en}
+Table~\ref{tab:ptc} lists the calibrated noise-parameter records corresponding to the matrix rows, spanning a 15871-DN dynamic range in the 14-bit simulation domain. Table~\ref{tab:patterns} details the specific offset patterns for profile P01. While stochastic common and mixed draws vary across records, complete numerical labels and model predictions for all 182 test cells are provided in the accompanying dataset, with 1 DN representing one digital code value in the normalized 14-bit domain.
+
+The single-frame model is evaluated across the matrix cells by comparing corrected and original observations on identical noise realizations.
+
+\section{Scene-Level Results and Statistical Analysis}
+\label{app:statistics}
+\figwide{operating_points_en}{.98}{$A$ versus $J$ on the eight-scene development set. The trajectory traces 70k--105k evaluations, where markers identify the early 46k, primary 105k, and subsequent 106k checkpoints. T1 and T7 use matched weights at each point.}{fig:operating}
+\figwide{z63_inference}{.93}{Visual demonstration using the 46k checkpoint on a synthetic Z63-domain sequence at 0.25-DN median brightness under fixed +3-EV display. The largest-offset valid frame illustrates uncorrected input, offline T1, sliding T7, and known-offset correction under identical motion and noise.}{fig:z63_inference_archive}
+\input{tables/sources_en}
+\input{tables/gains_en}
+\input{tables/buckets_en}
+Table~\ref{tab:sources} reports all eight scene-level results, and Table~\ref{tab:gains} lists the four-channel short-window perturbation gains. The paired scene-bootstrap analysis first averages the two offset trajectories within each source, then resamples the eight equally weighted scenes 20,000 times with seed 20261101. The reported 2.5th--97.5th percentile ranges summarize variation across these development scenes at the fixed, development-selected checkpoint.
+
+On the full empirical subset, zero correction has an MAE of 0.548180 DN and constant $+0.5$-DN correction has an MAE of 0.729488 DN. Table~\ref{tab:buckets} stratifies errors by offset sign and absolute target magnitude. The smallest nonzero interval $(0,0.1]\DN$ contains 13 dependent frame--channel components over which the fraction with increased error ($W$) is calculated, whereas the separate true-zero group measures behavior at exact zero offset.
+
+The continuous sequences in Fig.~\ref{fig:z63_empirical} use rendered development RGB radiance proxies at a 2-DN median. Four-CFA offsets come from the native-DN empirical-neighbor transition model fitted to Z63 dark recordings DSC4194 and DSC4200, with one signed constant component per channel. Eight scenes each contribute 120 frames, of which centers 6--113 are scored. T7 reduces $J$ relative to T1 in all eight scenes and $A$ in seven.
+
+
+\section{Seven-Frame Filtering Controls}
+\label{app:filters}
+The continuous comparison evaluates eight source scenes using one 120-frame trajectory per scene with persistent per-CFA offsets, scored over 108 valid center frames. Designed step stress interventions are analyzed separately in Section~V-D and Fig.~\ref{fig:designed_regimes}. Continuous predictions and labels are provided in \texttt{Z63\_CONTINUOUS\_105K.npz}, while the 16 short empirical segments are preserved in \texttt{DEV\_105K\_FULL.json}.
+
+The mean and median use all seven T1 values. The symmetric exponential weights are proportional to $\rho^{|i-j|}$ within each seven-frame segment. For the Kalman smoother, the latent offset is a Gaussian random walk with measurement variance $r_c$ and process variance $qr_c$. A diffuse initial variance of $10^6r_c$ is used. The jump model replaces each transition by
+\begin{equation}
+ \eta_{k,c}\sim(1-\pi)\mathcal N(0,qr_c)+\pi\mathcal N(0,(q+v)r_c).
+\end{equation}
+Its posterior mean sums all $2^6=64$ transition-indicator patterns. Every state is conditioned on the same seven measurements. Both continuous scoring and response measurement read only the sliding-window center state. Paired 120-frame response sequences reuse the base geometry, photon draws, and read-noise draws, with perturbations applied before integer quantization. The common perturbation adds 0.3 DN to each CFA. The relative perturbation centers each empirical CFA trajectory over frames 6--113 and scales its maximum absolute amplitude over all 120 frames to 0.3 DN. Common gain uses the mean paired change, while relative gain regresses the temporally centered paired change on the known perturbation. Both are measured at the same 108 centers used for $A$ and $J$.
+
+For each held-out scene, $r_c$ is estimated from zero-offset T1 errors on the other seven scenes. The fixed grid contains seven exponential factors, eight random-walk ratios, and 36 jump-model configurations, listed in \texttt{FILTER\_PROTOCOL.json}. Table~\ref{tab:filters_raw} reports these families before response calibration. To calibrate the finite-probe response toward T7, each family also receives the same per-CFA calibration
+\begin{equation}
+ \begin{aligned}
+ z_{t,c}&=\beta_c[(1-\alpha_c)p_{t,c}+\alpha_cF_c(p)_t],\\
+ &0\le\alpha_c\le1,\qquad0\le\beta_c\le1.5.
+\end{aligned}
+\end{equation}
+The two coefficients are solved from the common and relative gain targets on the other seven scenes. Configurations with maximum per-CFA mean-gain difference at most 0.05 are ranked by continuous $J$, then $A$, with the nearest-response configuration chosen whenever this candidate set is empty. All five families meet the training-mean tolerance in each of the eight folds. Coefficients and configurations are frozen for the held-out scene. Across held-out predictions, the largest per-CFA gain difference under these perturbation probes is 0.0353, and the largest individual scene--CFA difference is 0.1729. Supplementary records document per-scene gains, calibration coefficients, scores, and candidate operating points.
+
+\input{tables/filters_raw_en}
+\figwide{filter_frontier_en}{.98}{Development operating points for T1, T7, and five seven-frame postfilters. Left: absolute versus adjacent-change error, where gray points show the uncalibrated grid and colored markers represent response-calibrated selections. Color denotes mean relative gain. Right: measured streaming cost versus adjacent-change error. T1 predictions and T7 spatial tokens are cached across windows.}{fig:filter_frontier}
+
+Against the calibrated jump smoother, T7 lowers $J$ in six scenes and $A$ in seven. The paired scene-bootstrap 95\% ranges for $J_{T7}-J_{jump}$ and $A_{T7}-A_{jump}$ are $[-0.010941,-0.002215]\DN$ and $[-0.008743,-0.003141]\DN$, respectively. The calculation uses 20,000 paired resamples of the eight development scenes with fixed fold predictions. The other four calibrated families have higher $J$ than T7 in all eight scenes.
+
+Timing uses an RTX 3090 Ti, Ryzen 9 9900X, PyTorch 2.6/CUDA 12.4, FP32, and $320\times480$ Bayer frames. Each branch is verified bitwise against the original forward pass. Ten warm-up calls precede 100 timed calls per mode in alternating blocks. T1 caches frame predictions, and T7 caches the six retained spatial representations while encoding the new frame. GPU timing excludes decoding, the input adapter, and ISP. Postfilter CPU application uses one thread, with covariance matrices precomputed. Reported combined compute time sums the GPU-model and CPU-filter measurements, whereas output transfer and three-frame acquisition look-ahead remain outside this sum. Full timing samples, memory peaks, and filter-only costs are recorded in \texttt{NEURAL\_RUNTIME\_105K.json} and \texttt{FILTER\_COMPARISON\_105K.json}.
+
+\section{Real-Image Evaluation and Full-Resolution Inference}
+The color metric averages reference-relative CAM16-UCS $a'b'$ distances under fixed brightness matching and rendering across +6 EV captures from the S5 II, OM-1, and S9. Linear Bayer-cell values are area-reduced to a 768-pixel display width before fixed white balance, color conversion, and the sRGB transfer function. Translation and achromatic brightness scaling are estimated from the uncorrected image and applied to both outputs. The three cameras (S5 II, OM-1, and S9) are evaluated using the identical pretrained model and development pipeline, with the S9 operating with an electronic shutter at ISO 100.
+
+In a full-resolution runtime benchmark processing seven $6060\times3410$ Bayer frames, a single forward pass jointly produced T1 and T7 in 5.946328 s, with peak GPU tensor allocation of 1,753,204,736 bytes (1.63 GiB) and 2,470,445,056 bytes reserved by the allocator. Using all seven outputs yields an amortized 0.849475 s/frame, whereas a stride-one sliding window with independent recomputation and center-frame readout costs 5.946328 s/output frame (measured over the first forward pass, with file decoding and ISP outside the timed interval).
+
+\section{Reproducibility}
+The archive contains bilingual sources and PDFs, frozen predictions and labels for the 105k evaluations, the PTC matrix, exposure-ladder metrics, and executable filter-analysis and figure-generation code. SHA-256 manifests connect the numerical inputs and outputs. The \texttt{neural/} directory contains the inference implementation. The \texttt{weights/} directory provides the pretrained 37524 model, the primary temporal 105k model, and the 46k model used for Fig.~\ref{fig:z63_inference_archive}, with their identities documented in \texttt{neural/PROVENANCE.json}. The array interface accepts signed reference-subtracted packed Bayer data in DN. The neural response inference pipeline is documented in analysis/, while the provided prediction arrays support direct reproduction of the filter benchmark.

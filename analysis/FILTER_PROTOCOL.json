@@ -1,0 +1,67 @@
+{
+  "frozen_before_execution": "2026-11-04",
+  "checkpoint_updates": 105000,
+  "window_frames": 7,
+  "lookahead_frames": 3,
+  "source_count": 8,
+  "status": "development analysis; previously used model-selection scenes",
+  "primary_trajectory": "Unmodified Z63-derived 120-frame base sequences; persistent CFA offsets plus empirical transitions; designed step-pair member excluded",
+  "scored_frames": [
+    6,
+    113
+  ],
+  "selection": "For each held-out scene, use only seven other scenes to estimate zero-offset measurement variance and select one configuration per family. Require max per-CFA common and relative gain difference from T7 <=0.05; select minimum continuous J, then A. If no match exists, select minimum max gain difference, then J and A, and label unmatched.",
+  "response_tolerance": 0.05,
+  "grid": {
+    "schema": "T1_POSTHOC_SMOOTHER_GRID_V1",
+    "window_frames": 7,
+    "center_index": 3,
+    "lookahead_frames": 3,
+    "mean": "fixed arithmetic mean",
+    "median": "fixed sample median",
+    "exponential_rho": [
+      0.1,
+      0.25,
+      0.4,
+      0.55,
+      0.7,
+      0.85,
+      0.95
+    ],
+    "kalman_q_over_r": [
+      0.001,
+      0.003,
+      0.01,
+      0.03,
+      0.1,
+      0.3,
+      1.0,
+      3.0
+    ],
+    "jump_q_over_r": [
+      0.001,
+      0.01,
+      0.1
+    ],
+    "jump_probability": [
+      0.01,
+      0.03,
+      0.1,
+      0.2
+    ],
+    "jump_variance_over_r": [
+      4.0,
+      16.0,
+      64.0
+    ],
+    "measurement_variance": "Estimate per CFA from zero-offset NAF development sequences; freeze before test gate.",
+    "response_match_tolerance_per_cfa": 0.05,
+    "test_candidate_selection": "Frozen from source-held-out development predictions before test pixels are read"
+  },
+  "probe_support": "120-frame paired base/common/empirical-relative sequences; identical sliding seven-frame centers 6..113 for calibration and A/J scoring.",
+  "cost": "CPU postfilter warm batched application, separately measured neural modes if available; each output has three-frame lookahead.",
+  "sealed_test_pixels_read": 0,
+  "response_calibration": true,
+  "amendment": "2026-11-04 correction: replace fixed-segment all-position response probes with paired 120-frame sliding-center probes. Keep the prior filter grid, calibration coefficients, source-held-out selection, and scoring rules. CENTER_RESPONSE_PROTOCOL.json fixes perturbations before re-inference.",
+  "response_protocol": "CENTER_RESPONSE_PROTOCOL.json"
+}

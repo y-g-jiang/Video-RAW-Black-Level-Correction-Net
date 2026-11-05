@@ -1,0 +1,14 @@
+note: Running TeX ...
+note: Running xdvipdfmx ...
+note: Writing `supplement_en.aux` (8.06 KiB)
+note: Writing `supplement_en.pdf` (676.19 KiB)
+note: Writing `supplement_en.log` (23.62 KiB)
+note: Writing `supplement_en.out` (2.09 KiB)
+Fontconfig error: Cannot load default config file: No such file: (null)
+warning: appendix_en:31: Underfull \hbox (badness 2460) in paragraph at lines 30--31
+warning: Trying to include PDF file with version (1.7), which is newer than current output PDF setting (1.5).
+warning: appendix_en:66: Underfull \hbox (badness 1910) in paragraph at lines 65--66
+warning: appendix_en:66: Underfull \hbox (badness 1755) in paragraph at lines 65--66
+warning: appendix_en:86: Underfull \hbox (badness 1622) in paragraph at lines 85--86
+warning: warnings were issued by the TeX engine; use --print and/or --keep-logs for details.
+warning: Trying to include PDF file with version (1.7), which is newer than current output PDF setting (1.5).

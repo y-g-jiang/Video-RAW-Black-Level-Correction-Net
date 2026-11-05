@@ -1,0 +1,6 @@
+old_location,new_location,reason,status
+fixed_segment_response_probe,analysis/run_center_response.py and evidence/CENTER_RESPONSE_105K.npz,unify sliding center response and scoring,completed
+main and appendix selection prose,main IV-B and supplement B,preserve post-development operating-point identity,completed
+S3 caption,S3 caption in both languages,identify actual 46k weights,completed
+repository weight pointer,neural and weights,provide local verified inference assets,completed
+research gaps,RESEARCH_STATUS.md,preserve compact main paper and factual scope,completed

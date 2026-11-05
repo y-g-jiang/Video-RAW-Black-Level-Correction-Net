@@ -1,0 +1,26 @@
+{
+  "infer105.npz": {
+    "finite": true,
+    "bound_dn": 3.0,
+    "output_shape": [
+      1,
+      4
+    ]
+  },
+  "infer46.npz": {
+    "finite": true,
+    "bound_dn": 3.0,
+    "output_shape": [
+      1,
+      4
+    ]
+  },
+  "infer37524.npz": {
+    "finite": true,
+    "bound_dn": 1.0,
+    "output_shape": [
+      1,
+      4
+    ]
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "fixed_before_execution": "2026-11-04 correction of response operator",
+  "status": "development analysis on eight previously used sources",
+  "model_file_sha256": "cc42ebe94662b5e3f16987bc51f982623dcef5fb7d65b035192dcdc8d2eb964a",
+  "sequence_frames": 120,
+  "base": "The unchanged, persistent-background plus Z63 empirical-transition sequence for each original source/seed",
+  "paired_conditions": ["base", "base + 0.3 DN constant on each CFA", "base + h(t,c)"],
+  "h": "Center each source's empirical fluctuation over valid centers 6..113; scale independently per CFA so the maximum absolute value over all 120 frames is 0.3 DN",
+  "pairing": "Reuse geometry, photon and read-noise realizations; apply perturbations before integer quantization",
+  "network_output": "Sliding seven-frame center at original frames 3..116 for T1 and T7; filter those T1 outputs with the identical seven-frame center rule",
+  "score_and_gain_centers": [6, 113],
+  "common_gain": "Mean paired prediction change divided by 0.3 DN, separately by source and CFA",
+  "relative_gain": "Temporal-centered regression of paired prediction change on paired h, separately by source and CFA over the same 108 centers",
+  "calibration": "Original alpha and scale formula; estimate on the other seven scenes, freeze, score the eighth; retain the original filter grid and 0.05 aggregate training tolerance",
+  "reporting": "Report held-out aggregate and per-scene gain differences; call response matched only at the explicitly reported aggregation level and for these finite empirical-shaped probes",
+  "sealed_test_pixels_read": 0,
+  "neural_updates": 0
+}

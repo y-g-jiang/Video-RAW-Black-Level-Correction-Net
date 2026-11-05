@@ -1,0 +1,177 @@
+{
+  "selection": "S5 II, OM-1 and S9, +6 EV; user-selected manuscript examples on 2026-11-01",
+  "checkpoint_sha256": "445c31f3fbe2af8acbb5b181176f3f836cc1a8e2ec28aa36282bdd407d179d61",
+  "rows": [
+    {
+      "camera": "S5 II",
+      "ev": 6,
+      "before": 4.811924879224368,
+      "after": 4.015821775613611,
+      "reduction_pct": 16.544379299185575,
+      "prediction_dn": [
+        -0.39183881878852844,
+        -0.37798699736595154,
+        -0.3812645673751831,
+        -0.3698008954524994
+      ],
+      "raw": {
+        "file": "Panasonic_Lumix_DC-S5II__default__ISO100_1-320_plus6EV.rw2",
+        "sha": "B12242F90055BEBB0D88115F9152D42AF8C66BB80B54B293E2320DE6791C7676",
+        "ev": 6,
+        "exposure_seconds": 0.003125,
+        "iso": "100",
+        "aperture": "28/5",
+        "shape": [
+          4008,
+          6008
+        ],
+        "black": [
+          512,
+          512,
+          512,
+          512
+        ],
+        "white": 16319,
+        "wb": [
+          2.19140625,
+          1.0,
+          1.34375
+        ],
+        "ccm": [
+          [
+            1.4557195078582488,
+            -0.1812616433002628,
+            -0.2744578645579859
+          ],
+          [
+            -0.17227509280403644,
+            1.5644423968609749,
+            -0.39216730405693867
+          ],
+          [
+            -0.030519824301041956,
+            -0.38018408457414543,
+            1.4107039088751874
+          ]
+        ]
+      },
+      "source": "E:\\Workspaces\\ble_training_supervision_20261022\\ladder_color_ptc37524_20261031\\RESULT.json",
+      "source_sha256": "d1129858eb316661f0505d2ca7e3e7814738c22e91b8ab782c597a96eeca7691"
+    },
+    {
+      "camera": "OM-1",
+      "ev": 6,
+      "before": 14.256273510584858,
+      "after": 10.228349237701195,
+      "reduction_pct": 28.253696661284234,
+      "prediction_dn": [
+        0.8166667819023132,
+        0.8087049126625061,
+        0.8037383556365967,
+        0.8135899901390076
+      ],
+      "raw": {
+        "file": "OM_System_OM-1__default__ISO200_1-640_plus6EV.orf",
+        "sha": "EA18F9EC738D08A20823091A0D34A905A51597F9DAE42DF03210A87ACA37CE0D",
+        "ev": 6,
+        "exposure_seconds": 0.0015625,
+        "iso": "200",
+        "aperture": "28/5",
+        "shape": [
+          3912,
+          5220
+        ],
+        "black": [
+          254,
+          254,
+          254,
+          254
+        ],
+        "white": 4095,
+        "wb": [
+          2.4375,
+          1.0,
+          1.59375
+        ],
+        "ccm": [
+          [
+            1.4327136548238948,
+            -0.15422154271784863,
+            -0.2784921121060458
+          ],
+          [
+            -0.23571199082713368,
+            1.663133033598536,
+            -0.42742104277140247
+          ],
+          [
+            -0.010569059914105207,
+            -0.39094690469347243,
+            1.4015159646075777
+          ]
+        ]
+      },
+      "source": "E:\\Workspaces\\ble_training_supervision_20261022\\paper_tci_bilingual_20261101\\fig3_om1_preview\\RESULT.json",
+      "source_sha256": "97df3f8b5d2e759a7f794f4e2dccc52aeabadcb82ffb2723659c0238b43f3d3e"
+    },
+    {
+      "camera": "S9",
+      "ev": 6,
+      "before": 12.079137259681566,
+      "after": 7.720368635693451,
+      "reduction_pct": 36.08509887984353,
+      "prediction_dn": [
+        -0.5812056064605713,
+        -0.5629117488861084,
+        -0.561673641204834,
+        -0.5394378900527954
+      ],
+      "raw": {
+        "file": "Panasonic_Lumix_DC-S9__E-Shutter__ISO100_1-320_plus6EV.rw2",
+        "sha": "52AC0653B3EA66EDE99ECBB5CE2B4A684226F2D057127ECDB606C5059D2E6EDE",
+        "ev": 6,
+        "exposure_seconds": 0.003125,
+        "iso": "100",
+        "aperture": "28/5",
+        "shape": [
+          4016,
+          6016
+        ],
+        "black": [
+          128,
+          128,
+          128,
+          128
+        ],
+        "white": 4079,
+        "wb": [
+          2.390625,
+          1.0,
+          1.41796875
+        ],
+        "ccm": [
+          [
+            1.4715254728897627,
+            -0.24423275814312645,
+            -0.22729271474663668
+          ],
+          [
+            -0.1713466005782647,
+            1.5744311445975325,
+            -0.40308454401926774
+          ],
+          [
+            -0.022996119855483967,
+            -0.3920418540584511,
+            1.4150379739139352
+          ]
+        ]
+      },
+      "source": "E:\\Workspaces\\ble_training_supervision_20261022\\paper_tci_bilingual_20261101\\s9_plus6_preview\\RESULT.json",
+      "source_sha256": "665a51f1522ed110948edc3ae1331d86be33f33ce110cc38df89faa0abe785d4"
+    }
+  ],
+  "reference_definition": "Normally exposed 0-EV image of the same scene, aligned and brightness matched; color-consistency reference.",
+  "metric": "CAM16-UCS a-prime b-prime shadow chromaticity distance, fixed renderer and reference mask",
+  "source_protocol": "ExposureLadder: 0EV reference and 1..6EV darker inputs; original metrics preserved"
+}

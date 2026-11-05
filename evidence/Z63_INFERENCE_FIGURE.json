@@ -1,0 +1,125 @@
+{
+  "status": "VERIFIED_SYNTHETIC_LOW_EXPOSURE_REINFERENCE",
+  "parent_figure": "prior_fig7_v12/evidence/Z63_INFERENCE_FIGURE.json",
+  "source_generator": "E:\\Workspaces\\ble_training_supervision_20261022\\naf_z63_legacy_posttrain_20261030\\synthetic_video_20261030\\build_video.py",
+  "source_generator_sha256": "efd6a59a777a4fd8e7e28a33f28c3f1e1d76abbf08631fd9ebd297f6f5144ae9",
+  "source_image": "E:/Workspaces/ble_training_supervision_20261022/naf_z63_specialist_20261025/temporal_pilot_20261026/dev_sources/0808.png",
+  "source_image_sha256": "956528ab3e0fadad1ed8ce93f93a30bf9f58c36ffa9dd775e2ad362ffdcf5ace",
+  "source_crop_yx": [
+    206,
+    529
+  ],
+  "source_kind": "rendered RGB radiance template, not sensor RAW GT",
+  "model_checkpoint": "E:\\Workspaces\\ble_training_supervision_20261022\\naf_z63_legacy_posttrain_20261030\\BEST.pt",
+  "model_checkpoint_sha256": "6eaf41ba0f6df556ab23bd54fbbbe72ecd4ce2e51899b0881e2cf602fb4bb4be",
+  "model_phase_updates": 46000,
+  "source_sequence_seed": 2026103007,
+  "source_scene_median_dn": 2.0,
+  "scene_median_dn": 0.25,
+  "exposure_change_ev": -3,
+  "exposure_applied_before_shot_noise": true,
+  "display_gain_ev": 3,
+  "fixed_display_white_dn": 1.5,
+  "display_mapping": "Bilinear RGGB demosaicing followed by shared +3-EV linear-to-sRGB mapping with clipping to [0,1]; identical for all panels.",
+  "frame_index_zero_based": 7,
+  "frame_time_seconds": 0.2916666666666667,
+  "frame_selection_basis": "Maximum L2 norm of the injected four-CFA offset vector among the 114 frames with a complete T7 context; selection uses injected offsets only.",
+  "profile": "DSC4200",
+  "motion_mode": "analog",
+  "noise_sigma_dn": 1.3573359551214108,
+  "common_offset_dn": [
+    0.07920812762344642,
+    -0.42835584813244176,
+    0.6426895747548336,
+    -0.23394314777659153
+  ],
+  "frame_offset_dn": [
+    0.010386402742569523,
+    -0.41521071085330286,
+    0.6504208345147411,
+    1.0453674603958176
+  ],
+  "frame_t1_prediction_dn": [
+    -0.025725986808538437,
+    -0.4280269145965576,
+    0.6442514061927795,
+    0.9416005611419678
+  ],
+  "frame_t7_prediction_dn": [
+    -0.010942570865154266,
+    -0.39681655168533325,
+    0.6550735235214233,
+    0.9717971086502075
+  ],
+  "inference_seconds": 122.69725980004296,
+  "fixed_shadow_roi_packed_yx": [
+    92,
+    156,
+    76,
+    140
+  ],
+  "roi_selection_basis": "Fixed lower-frame shadow crop selected from scene content, independent of model outputs.",
+  "panels": [
+    "Uncorrected RAW",
+    "NAF offline T1",
+    "NAF sliding T7",
+    "Known-offset oracle"
+  ],
+  "all_panels_share_same_input_and_noise": true,
+  "same_checkpoint_as_parent_demo": false,
+  "checkpoint_relation": "Uses the protected 46,000-update NAF BEST; the former 23,000-update checkpoint was overwritten and is not used.",
+  "training_state_modified": false,
+  "synthetic_only": true,
+  "sealed_test_used": false,
+  "quantitative_scope": "One fixed synthetic development source and one displayed frame; qualitative illustration.",
+  "figure_png": "E:\\Workspaces\\ble_training_supervision_20261022\\paper_tci_bilingual_20261101\\figures\\z63_inference_underexposed_v3.png",
+  "figure_png_sha256": "95cecc33c3d27653da29b3e09450ae6257bb58a52c6bd93f00beea58c99c31da",
+  "figure_pdf": "E:\\Workspaces\\ble_training_supervision_20261022\\paper_tci_bilingual_20261101\\figures\\z63_inference_underexposed_v3.pdf",
+  "figure_pdf_sha256": "f7781393a199cc52c9c529fb0240edf53ccb5afe708289f76df02890f163419c",
+  "paired_inference_metrics": {
+    "uncorrected": {
+      "absolute_mae_dn": 0.42125422286330183,
+      "adjacent_error_mae_dn": 0.15185463896258336,
+      "per_cfa_abs_mae_dn": [
+        0.0772150852774489,
+        0.4281370208894253,
+        0.642794664906496,
+        0.5368701203798373
+      ]
+    },
+    "offline_T1": {
+      "absolute_mae_dn": 0.03607644175358364,
+      "adjacent_error_mae_dn": 0.03218596023410994,
+      "per_cfa_abs_mae_dn": [
+        0.022689209425862243,
+        0.0418652498309061,
+        0.03586076202245221,
+        0.04389054573511394
+      ],
+      "adjacent_response_gain": 0.9368409277289751,
+      "adjacent_response_correlation": 0.9954630143155783
+    },
+    "T7_sliding": {
+      "absolute_mae_dn": 0.03506134735420737,
+      "adjacent_error_mae_dn": 0.02639275018818395,
+      "per_cfa_abs_mae_dn": [
+        0.021013739515838112,
+        0.043968293010487394,
+        0.039297196238005996,
+        0.03596616065249782
+      ],
+      "adjacent_response_gain": 0.959495531820898,
+      "adjacent_response_correlation": 0.9967653044384546
+    },
+    "GT_oracle": {
+      "absolute_mae_dn": 0.0,
+      "adjacent_error_mae_dn": 0.0,
+      "per_cfa_abs_mae_dn": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  }
+}

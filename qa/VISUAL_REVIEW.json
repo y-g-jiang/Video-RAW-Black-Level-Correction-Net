@@ -1,0 +1,14 @@
+{
+  "all_pages_reviewed": 26,
+  "pages": {
+    "en_main": 8,
+    "zh_main": 7,
+    "en_supplement": 6,
+    "zh_supplement": 5
+  },
+  "final_rendered_pdfs": true,
+  "unresolved_cross_references": 0,
+  "visible_overflow_or_missing_glyphs": 0,
+  "nonfinal_large_blank_regions": 0,
+  "notes": "Figure S3 explicitly labels 46k in both captions; offset trajectory axes remain -2/0/+2 DN; original figures retained except corrected continuous and filter-frontier plots."
+}

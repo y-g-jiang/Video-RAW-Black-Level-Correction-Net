@@ -1,0 +1,9 @@
+note: Running TeX ...
+note: Running xdvipdfmx ...
+note: Writing `chinese.aux` (10.88 KiB)
+note: Writing `chinese.out` (2.51 KiB)
+note: Writing `chinese.log` (27.54 KiB)
+note: Writing `chinese.pdf` (5.97 MiB)
+Fontconfig error: Cannot load default config file: No such file: (null)
+warning: references:4: Underfull \hbox (badness 6461) in paragraph at lines 3--4
+warning: warnings were issued by the TeX engine; use --print and/or --keep-logs for details.
